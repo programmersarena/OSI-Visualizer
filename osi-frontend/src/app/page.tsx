@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import ThreeWayHandshake from "./components/ThreeWayHandshake";
 import RouterVisualization from "./components/RouterVisualization";
+import DnsLookup from "./components/DnsLookup";
 
 export default function App() {
   const [url, setUrl] = useState<string>("");
@@ -59,7 +60,7 @@ export default function App() {
   };
 
   const osiLayers = [
-    { title: "Application Layer", info: osiData?.Layer7_Application ? "Headers Fetched" : "Processing..." },
+    { title: "Application Layer", info: <DnsLookup domain={url} /> },
     { title: "Presentation Layer", info: "SSL/TLS Encryption" },
     { title: "Session Layer", info: "TCP Handshake Verified" },
     { title: "Transport Layer", info: <ThreeWayHandshake /> },
@@ -71,7 +72,7 @@ export default function App() {
           <p className="text-gray-700">🛜 Total Hops: {osiData?.Layer3_Network.Hops}</p>
           {isp && <p className="text-gray-700 font-medium">🌐 Your ISP: {isp}</p>}
           <p className="font-semibold text-gray-900 mt-2">📍 Packet Journey:</p>
-          <RouterVisualization routers={osiData?.Layer3_Network.Routers} currentHop={currentHop} />
+          <RouterVisualization routers={osiData?.Layer3_Network.Routers}  />
         </>
       ),
     },
