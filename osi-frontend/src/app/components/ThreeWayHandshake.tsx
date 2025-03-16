@@ -3,7 +3,6 @@ import { useState, useEffect, JSX } from "react";
 import { motion } from "framer-motion";
 
 export default function ThreeWayHandshake(): JSX.Element {
-  
 
   const [step, setStep] = useState<number>(0);
 
