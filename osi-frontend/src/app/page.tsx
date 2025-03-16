@@ -25,7 +25,7 @@ export default function App() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/analyze`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/analyze`,
         { url }
       );
       setOsiData(response.data);
@@ -105,9 +105,8 @@ export default function App() {
           {osiLayers.map((layer, index) => (
             <div
               key={index}
-              className={`p-4 my-2 bg-gray-200 border border-gray-400 rounded-lg transition-all duration-700 ${
-                currentStep >= index + 1 ? "opacity-100" : "opacity-50"
-              }`}
+              className={`p-4 my-2 bg-gray-200 border border-gray-400 rounded-lg transition-all duration-700 ${currentStep >= index + 1 ? "opacity-100" : "opacity-50"
+                }`}
             >
               <p className="font-semibold text-gray-900">{layer.title}:</p>
               <div className="text-sm text-gray-700">{layer.info}</div>
