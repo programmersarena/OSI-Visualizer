@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 interface RouterVisualizationProps {
   routers: string[];
-  currentHop: number,
+  
 }
 
 const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) => {

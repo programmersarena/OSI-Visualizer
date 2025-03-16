@@ -3,7 +3,6 @@ import { getIPAddress } from "./utils/dnsUtils.js";
 import { getTracerouteHops } from "./utils/tracerouteUtils.js";
 import { getPortStatus } from "./utils/portUtils.js";
 import { getHttpHeaders } from "./utils/httpUtils.js";
-
 const router = express.Router();
 
 router.post("/analyze", async (req, res) => {
@@ -30,5 +29,23 @@ router.post("/analyze", async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+
+// DNS lookup route
+router.post("/dns-lookup", async (req, res) => {
+    let { domain } = req.body;
+    if (!domain) return res.status(400).json({ error: "Domain is required" });
+
+    try {
+        const ip = await getIPAddress(domain); // Use the utility function
+        res.json({ ip }); // Return the IP address
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+
 
 export default router;
