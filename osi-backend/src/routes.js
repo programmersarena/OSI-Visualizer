@@ -1,5 +1,5 @@
 import express from "express";
-import { getIPAddress } from "./utils/dnsUtils.js";
+import { getDomainDetails, getIPAddress } from "./utils/dnsUtils.js";
 import { getTracerouteHops } from "./utils/tracerouteUtils.js";
 import { getPortStatus } from "./utils/portUtils.js";
 import { getHttpHeaders } from "./utils/httpUtils.js";
@@ -34,8 +34,8 @@ router.post("/dns-lookup", async (req, res) => {
     let { domain } = req.body;
     if (!domain) return res.status(400).json({ error: "Domain is required" });
     try {
-        const ip = await getIPAddress(domain); // Use the utility function
-        res.json({ ip }); // Return the IP address
+        const result = await getDomainDetails(domain); // Use the updated function
+        res.json(result); // Return IP, protocol, domain, and path
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
