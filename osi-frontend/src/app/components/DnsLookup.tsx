@@ -24,6 +24,7 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
         const response = await axios.post<{ ip: string }>(
           `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/dns-lookup`,
           { domain:cleanDomain}
+          
         );
         setIp(response.data.ip);
 
@@ -43,6 +44,7 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
     fetchDnsLookup();
   }, [domain]);
 
+  
   return (
     <div className="p-4 border rounded-lg shadow-md bg-white w-full max-w-lg">
       <h2 className="text-lg font-bold text-blue-600">DNS Lookup</h2>

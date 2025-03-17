@@ -8,7 +8,6 @@ const router = express.Router();
 router.post("/analyze", async (req, res) => {
     const { url } = req.body;
     if (!url) return res.status(400).json({ error: "URL is required" });
-
     try {
         const hostname = new URL(url).hostname;
         const ipAddress = await getIPAddress(hostname);
@@ -23,7 +22,6 @@ router.post("/analyze", async (req, res) => {
             Layer6_Presentation: "SSL/TLS Encryption",
             Layer7_Application: await getHttpHeaders(url),
         };
-
         res.json(osiData);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -35,7 +33,6 @@ router.post("/analyze", async (req, res) => {
 router.post("/dns-lookup", async (req, res) => {
     let { domain } = req.body;
     if (!domain) return res.status(400).json({ error: "Domain is required" });
-
     try {
         const ip = await getIPAddress(domain); // Use the utility function
         res.json({ ip }); // Return the IP address
