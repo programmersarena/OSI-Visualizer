@@ -4,9 +4,20 @@ import RouterVisualization from "./RouterVisualization";
 import DnsLookup from "./DnsLookup";
 import OsiLayer from "./OsiLayer";
 
+
+interface NetworkLayerData {
+  IP: string;
+  Hops: number;
+  Routers: string[];
+}
+
+interface OsiData {
+  Layer3_Network: NetworkLayerData;
+}
+
 type OsiVisualizationProps = {
-  osiData: any;
-  url:string;
+  osiData: OsiData;
+  url: string;
   currentStep: number;
   isp: string | null;
 };

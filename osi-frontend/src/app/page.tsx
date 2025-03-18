@@ -5,13 +5,22 @@ import axios from "axios";
 import InputForm from "./components/InputForm";
 import OsiVisualization from "./components/OsiVisualization";
 
+interface NetworkLayerData {
+  IP: string;
+  Hops: number;
+  Routers: string[];
+}
+
+interface OsiData {
+  Layer3_Network: NetworkLayerData;
+}
+
 export default function App() {
   const [url, setUrl] = useState<string>("");
-  const [osiData, setOsiData] = useState<any>(null);
+  const [osiData, setOsiData] = useState<OsiData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [currentHop, setCurrentHop] = useState<number>(-1);
   const [isp, setIsp] = useState<string | null>(null);
 
   const handleSubmit = async () => {
@@ -20,7 +29,6 @@ export default function App() {
     setError("");
     setOsiData(null);
     setCurrentStep(0);
-    setCurrentHop(-1);
     setIsp(null);
 
     try {
@@ -42,14 +50,6 @@ export default function App() {
         setCurrentStep(step);
         if (step === 7) clearInterval(osiInterval);
       }, 800);
-
-      // Simulate hop-by-hop animation
-      let hop = -1;
-      const hopInterval = setInterval(() => {
-        hop++;
-        setCurrentHop(hop);
-        if (hop === response.data.Layer3_Network.Routers.length) clearInterval(hopInterval);
-      }, 1000);
     } catch (err) {
       setError("Error fetching data. Please check the URL.");
       console.error(err);
@@ -63,7 +63,7 @@ export default function App() {
       <h1 className="text-3xl font-bold mb-4 text-blue-600">OSI Layer Visualizer</h1>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} loading={loading} />
       {error && <p className="text-red-500 mt-2">{error}</p>}
-      {osiData &&  <OsiVisualization osiData={osiData} url={url} currentStep={currentStep} isp={isp} />}
+      {osiData && <OsiVisualization osiData={osiData} url={url} currentStep={currentStep} isp={isp} />}
     </div>
   );
 }
