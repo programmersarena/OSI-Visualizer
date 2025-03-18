@@ -3,6 +3,7 @@ import ThreeWayHandshake from "./ThreeWayHandshake";
 import RouterVisualization from "./RouterVisualization";
 import DnsLookup from "./DnsLookup";
 import OsiLayer from "./OsiLayer";
+import DataLink from "./DataLink";
 
 
 interface NetworkLayerData {

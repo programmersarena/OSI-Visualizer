@@ -20,7 +20,7 @@ interface OsiData {
 }
 
 export default function App() {
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>("https://");
   const [osiData, setOsiData] = useState<OsiData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -74,7 +74,7 @@ export default function App() {
           <p className="text-gray-700">🛜 Total Hops: {osiData?.Layer3_Network.Hops}</p>
           {isp && <p className="text-gray-700 font-medium">🌐 Your ISP: {isp}</p>}
           <p className="font-semibold text-gray-900 mt-2">📍 Packet Journey:</p>
-          <RouterVisualization routers={osiData?.Layer3_Network.Routers}  />
+          <RouterVisualization routers={osiData?.Layer3_Network.Routers || []}  />
         </>
       ),
     },
