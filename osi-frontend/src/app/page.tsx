@@ -8,6 +8,7 @@ import ThreeWayHandshake from "./components/ThreeWayHandshake";
 import DnsLookup from "./components/DnsLookup";
 import RouterVisualization from "./components/RouterVisualization";
 import DataLink from "./components/DataLink";
+import LoadingScreen from "./components/LoadingScreen";
 
 interface NetworkLayerData {
   IP: string;
@@ -88,6 +89,7 @@ export default function App() {
       <h1 className="text-3xl font-bold mb-4 text-blue-600">OSI Layer Visualizer</h1>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} loading={loading} />
       {error && <p className="text-red-500 mt-2">{error}</p>}
+      
       {osiData && <OsiVisualization osiData={osiData} url={url} currentStep={currentStep} isp={isp} />}
     </div>
   );
