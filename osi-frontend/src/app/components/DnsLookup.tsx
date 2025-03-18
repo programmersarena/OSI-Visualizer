@@ -18,7 +18,7 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<number>(0);
   const [userIp, setUserIp] = useState<string | null>(null);
-
+  const [properDomain, setProperDomain]= useState<string | null>(null);
   useEffect(() => {
     if (!domain) return;
     setLoading(true);
@@ -37,7 +37,7 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
           `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/dns-lookup`,
           { domain: cleanDomain }
         );
-
+        setProperDomain(cleanDomain);
         setIp(response.data.ip);
         setProtocol(response.data.protocol);
         setExtractedDomain(response.data.domain);
@@ -96,7 +96,7 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
               transition={{ duration: 1 }}
               className="absolute top-10 left-1/4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md"
             >
-              📨 "Hey DNS! I need IP for {domain}"
+              📨 "Hey Resolver! I need IP for {properDomain}"
             </motion.div>
           )}
 
