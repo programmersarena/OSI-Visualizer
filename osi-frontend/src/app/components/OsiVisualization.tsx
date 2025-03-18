@@ -40,7 +40,7 @@ const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, curre
         </>
       ),
     },
-    { title: "Data Link Layer", content: "MAC Address Info" },
+    { title: "Data Link Layer", content: <DataLink /> },
     { title: "Physical Layer", content: "Network Interface Info" },
   ];
 

@@ -34,12 +34,6 @@ router.post("/analyze", async (req, res) => {
 router.post("/dns-lookup", async (req, res) => {
     let { domain } = req.body;
     if (!domain) return res.status(400).json({ error: "Domain is required" });
-
-    console.log(domain);
-    try {
-        const ip = await getIPAddress(domain); // Use the utility function
-        console.log(ip);
-        res.json({ ip }); // Return the IP address
     try {
         const result = await getDomainDetails(domain); // Use the updated function
         res.json(result); // Return IP, protocol, domain, and path
