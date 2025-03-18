@@ -19,5 +19,3 @@ This tool provides an **interactive way to visualize** how data packets move thr
 | **3. Network** | Routing and addressing | IP, ICMP |
 | **2. Data Link** | MAC addressing and framing | Ethernet, Wi-Fi |
 | **1. Physical** | Hardware transmission | Cables, Radio Signals |
-
-

@@ -3,6 +3,7 @@ import { getIPAddress } from "./utils/dnsUtils.js";
 import { getTracerouteHops } from "./utils/tracerouteUtils.js";
 import { getPortStatus } from "./utils/portUtils.js";
 import { getHttpHeaders } from "./utils/httpUtils.js";
+import { getClientMacAddress , getGatewayMacAddress } from "./utils/macAddress.js";
 const router = express.Router();
 
 router.post("/analyze", async (req, res) => {
@@ -35,17 +36,33 @@ router.post("/analyze", async (req, res) => {
 router.post("/dns-lookup", async (req, res) => {
     let { domain } = req.body;
     if (!domain) return res.status(400).json({ error: "Domain is required" });
-
+    console.log(domain);
     try {
         const ip = await getIPAddress(domain); // Use the utility function
+        console.log(ip);
         res.json({ ip }); // Return the IP address
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
+// MAC address route
 
-
-
+router.get("/mac-info", async (req, res) => {
+    try {
+      const clientMac = getClientMacAddress();
+      const gatewayMac = await getGatewayMacAddress();
+  
+      res.json({
+        clientMac: clientMac,
+        gatewayMac: gatewayMac,
+      });
+    } catch (error) {
+      console.error("Error fetching MAC addresses:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
 
 export default router;
+
+

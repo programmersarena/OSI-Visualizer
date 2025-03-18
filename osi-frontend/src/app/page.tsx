@@ -5,6 +5,7 @@ import axios from "axios";
 import ThreeWayHandshake from "./components/ThreeWayHandshake";
 import RouterVisualization from "./components/RouterVisualization";
 import DnsLookup from "./components/DnsLookup";
+import DatalinkLayer from "./components/DataLink"
 
 export default function App() {
   const [url, setUrl] = useState<string>("");
@@ -76,7 +77,8 @@ export default function App() {
         </>
       ),
     },
-    { title: "Data Link Layer", info: "MAC Address Info" },
+  
+    { title: "Data Link Layer", info: <DatalinkLayer/> },
     { title: "Physical Layer", info: "Network Interface Info" },
   ];
 
