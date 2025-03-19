@@ -19,7 +19,7 @@ export default function ThreeWayHandshake(): JSX.Element {
 
       {/* Container for handshake steps */}
       <div className="flex flex-col items-center w-full max-w-3xl border border-gray-300 p-4 rounded-lg bg-white shadow-md gap-4">
-        
+
         {/* Step 1: SYN */}
         <div className="flex flex-row justify-between items-center w-full p-3 border border-gray-400 rounded-lg bg-gray-50">
           <div className="flex flex-col items-center">
