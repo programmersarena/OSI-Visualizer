@@ -16,7 +16,7 @@ const DataLinkLayer = () => {
         const response = await axios.get(`${API_URL}/api/mac-info`);
         setMacInfo(response.data);
       } catch (err) {
-        setError("Failed to fetch MAC addresses.");
+        setError(`Failed to fetch MAC addresses: ${err}`);
       } finally {
         setLoading(false);
       }
