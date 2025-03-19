@@ -5,7 +5,6 @@ import DnsLookup from "./DnsLookup";
 import OsiLayer from "./OsiLayer";
 import DataLink from "./DataLink";
 
-
 interface NetworkLayerData {
   IP: string;
   Hops: number;
