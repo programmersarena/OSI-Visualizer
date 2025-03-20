@@ -1,9 +1,10 @@
 import React from "react";
-import ThreeWayHandshake from "./ThreeWayHandshake";
-import RouterVisualization from "./RouterVisualization";
-import DnsLookup from "./DnsLookup";
+import ThreeWayHandshake from "../Transport_Layer/ThreeWayHandshake";
+import RouterVisualization from "../Network_Layer/RouterVisualization";
 import OsiLayer from "./OsiLayer";
-import DataLink from "./DataLink";
+import DataLink from "../Datalink_Layer/DataLink";
+import TlsHandshake from "../Presentation_Layer/TlsHandshake";
+import ApplicationBase from "../Application_Layer/Application_Base";
 
 interface NetworkLayerData {
   IP: string;
@@ -24,8 +25,8 @@ type OsiVisualizationProps = {
 
 const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, currentStep, isp }) => {
   const osiLayers = [
-    { title: "Application Layer", content: <DnsLookup domain={url} /> },
-    { title: "Presentation Layer", content: "SSL/TLS Encryption" },
+    { title: "Application Layer", content: <ApplicationBase domain={url} /> },
+    { title: "Presentation Layer", content: <TlsHandshake /> },
     { title: "Session Layer", content: "TCP Handshake Verified" },
     { title: "Transport Layer", content: <ThreeWayHandshake /> },
     {

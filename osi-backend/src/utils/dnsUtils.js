@@ -12,17 +12,19 @@ export async function getIPAddress(domain) {
 
 export async function getDomainDetails(domainUrl) {
     try {
-        // Parse the URL to get protocol, domain, and path
-        const url = new URL(domainUrl.startsWith("http") ? domainUrl : `https://${domainUrl}`);
-        const protocol = url.protocol.replace(":", ""); // Remove ':' from 'https:'
-        const domain = url.hostname;
-        const path = url.pathname || "/";
-
-        // Perform DNS lookup
+        const { domain } = extractUrlDetails(domainUrl);
         const { address } = await dns.lookup(domain);
-
-        return { ip: address, protocol, domain, path };
+        return { ip: address };
     } catch (err) {
         throw new Error(`DNS Lookup Failed: ${err.message}`);
     }
+}
+
+export function extractUrlDetails(domainUrl) {
+    const url = new URL(domainUrl.startsWith("http") ? domainUrl : `https://${domainUrl}`);
+    return {
+        protocol: url.protocol.replace(":", ""), // Remove ":" from "https:"
+        domain: url.hostname,
+        path: url.pathname || "/",
+    };
 }
