@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", routes);
 
-app.get('/', (req, res) => {
+app.get('/livecheck', (req, res) => {
     res.send('Server is running!');
   });
 
