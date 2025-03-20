@@ -7,4 +7,20 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", routes);
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+const server = app.listen(5000, () => console.log("Server running on port 5000"));
+
+process.on("SIGTERM", () => {
+    console.log("SIGTERM received. Shutting down gracefully...");
+    server.close(() => {
+        console.log("Server closed.");
+        process.exit(0);
+    });
+});
+
+process.on("SIGINT", () => {
+    console.log("SIGINT received. Shutting down...");
+    server.close(() => {
+        console.log("Server closed.");
+        process.exit(0);
+    });
+});
