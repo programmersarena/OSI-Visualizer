@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import axios from "axios";
-import InputForm from "./components/InputForm";
-import OsiVisualization from "./components/OsiVisualization";
+import InputForm from "./components/Osi_Components/InputForm"
+import OsiVisualization from "./components/Osi_Components/OsiVisualization";
 
 interface NetworkLayerData {
   IP: string;

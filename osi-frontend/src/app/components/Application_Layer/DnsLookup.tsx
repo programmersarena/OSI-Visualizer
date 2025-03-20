@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
-import { FaDesktop, FaServer } from "react-icons/fa";
-import HttpRequestAnimation from "./HttpRequestAnimation";
-import TlsHandshake from "./TlsHandshake";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaDesktop, FaServer, FaChevronDown } from "react-icons/fa";
 
 type DnsLookupProps = {
   domain: string;
@@ -11,14 +9,12 @@ type DnsLookupProps = {
 
 export default function DnsLookup({ domain }: DnsLookupProps) {
   const [ip, setIp] = useState<string | null>(null);
-  const [protocol, setProtocol] = useState<string | null>(null);
-  const [extractedDomain, setExtractedDomain] = useState<string | null>(null);
-  const [path, setPath] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<number>(0);
   const [userIp, setUserIp] = useState<string | null>(null);
   const [properDomain, setProperDomain] = useState<string | null>(null);
+  const [showDetails, setShowDetails] = useState<boolean>(false);
 
   useEffect(() => {
     if (!domain) return;
@@ -40,9 +36,6 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
         );
         setProperDomain(cleanDomain);
         setIp(response.data.ip);
-        setProtocol(response.data.protocol);
-        setExtractedDomain(response.data.domain);
-        setPath(response.data.path);
 
         const userIpResponse = await axios.get("https://api64.ipify.org?format=json");
         setUserIp(userIpResponse.data.ip);
@@ -65,16 +58,6 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
 
   return (
     <div className="w-full flex flex-col items-start space-y-2">
-      <p className="text-lg mt-4 font-semibold text-blue-700">
-        🌐 Protocol: <span className="text-gray-800">{protocol || "N/A"}</span>
-      </p>
-      <p className="text-lg font-semibold text-green-700">
-        🏠 Domain: <span className="text-gray-800">{extractedDomain || "N/A"}</span>
-      </p>
-      <p className="text-lg font-semibold text-purple-700">
-        📍 Path: <span className="text-gray-800">{path || "N/A"}</span>
-      </p>
-
       <div className="w-full h-full flex flex-col mt-2 items-center justify-center bg-gray-100 p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-bold text-blue-600 mb-4">DNS Lookup</h2>
 
@@ -117,22 +100,55 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
         {error && <p className="text-red-500 mt-4">{error}</p>}
       </div>
 
-      <div className="w-full p-6 mt-6 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md">
-        <h3 className="text-lg font-bold text-yellow-700">⚠️ DNS Adventure Time! 🌍</h3>
-        <p className="text-gray-800">Your browser tries to resolve the domain in a series of steps:</p>
-        <ul className="list-disc list-inside text-gray-700 mt-2">
-          <li>🧠 First, it checks its <span className="text-blue-600">cache</span> for the IP address.</li>
-          <li>💻 Then it asks your <span className="text-green-600">OS</span> for help.</li>
-          <li>🌐 Still no luck? It queries your <span className="text-purple-600">ISP&apos;s DNS server</span>.</li>
-          <li>🚀 If needed, it goes on a <span className="text-blue-500">DNS World Tour</span>:<ul className="list-disc ml-5">
+      {/* Dropdown Toggle Button */}
+      <div
+  className="w-full p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md cursor-pointer flex justify-between items-center"
+  onClick={() => setShowDetails(!showDetails)}
+>
+  <h3 className="text-lg font-bold text-yellow-700">⚠️ DNS Adventure Time! 🌍</h3>
+  <FaChevronDown
+    className={`w-5 h-5 text-yellow-700 transition-transform duration-900 ${
+      showDetails ? "rotate-180" : "rotate-0"
+    }`}
+  />
+</div>
+
+
+{/* Animated Dropdown Content */}
+<AnimatePresence>
+  {showDetails && (
+    <motion.div
+      initial={{ maxHeight: 0, opacity: 0 }}
+      animate={{ maxHeight: 500, opacity: 1 }}
+      exit={{ maxHeight: 0, opacity: 0 }}
+      transition={{ duration: 0.9, ease: "easeInOut" }}
+      className="w-full bg-yellow-50 overflow-hidden p-4 rounded-lg shadow-md"
+    >
+      <p className="text-gray-800">
+        Your browser tries to resolve the domain in a series of steps:
+      </p>
+      <ul className="list-disc list-inside text-gray-700 mt-2">
+        <li>
+          🧠 First, it checks its <span className="text-blue-600">cache</span> for the IP address.
+        </li>
+        <li>
+          💻 Then it asks your <span className="text-green-600">OS</span> for help.
+        </li>
+        <li>
+          🌐 Still no luck? It queries your <span className="text-purple-600">ISP&apos;s DNS server</span>.
+        </li>
+        <li>
+          🚀 If needed, it goes on a <span className="text-blue-500">DNS World Tour</span>:
+          <ul className="list-disc ml-5">
             <li>Root DNS → TLD DNS → Authoritative DNS</li>
             <li>Finally, it gets the IP address and returns it to your browser. 🎉</li>
-          </ul></li>
-        </ul>
-      </div>
+          </ul>
+        </li>
+      </ul>
+    </motion.div>
+  )}
+</AnimatePresence>
 
-      {protocol === 'http' && <HttpRequestAnimation />}
-      {protocol === 'https' && <TlsHandshake />}
     </div>
   );
 }
