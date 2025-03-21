@@ -1,25 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 
-const HttpHeaderAnimation = () => {
+type HttpHeaderAnimationProps = {
+  domain: string;
+};
+
+const HttpHeaderAnimation = ({domain} : HttpHeaderAnimationProps) => {
+  const [requestLines, setRequestLines] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
-  const requestLines = [
-    "GET /index.html HTTP/1.1",
-    "Host: example.com",
-    "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9",
-    "Accept-Language: en-US,en;q=0.5",
-    "Accept-Encoding: gzip, deflate, br",
-    "Connection: keep-alive",
-  ];
+  const fetchRequestHeaders = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    setSent(false);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/get-http-request`,
+        { domain }
+      );
+      setRequestLines(response.data.requestLines);
+      setSent(true);
+    } catch (err) {
+      console.error("Error fetching HTTP request headers:", err);
+      setError("Failed to fetch request headers.");
+    } finally {
+      setLoading(false);
+    }
+  }, [domain]);
+  useEffect(() => {
+    fetchRequestHeaders();
+  }, [fetchRequestHeaders]);
 
   return (
     <div className="flex p-6 my-2 w-full flex-col items-center justify-center bg-gray-900 rounded-lg text-white">
       <h2 className="text-3xl font-bold mb-6">🌐 HTTP Request Header</h2>
-
       <div className="bg-gray-800 w-full flex flex-col items-center justify-center p-6 rounded-lg shadow-lg w-[400px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,10 +73,9 @@ const HttpHeaderAnimation = () => {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => setSent(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md"
             >
-              Send HTTP Request 🌍
+              {loading ? "Fetching..." : "Send HTTP Request 🌍"}
             </motion.button>
           </motion.div>
         ) : (
@@ -70,6 +88,8 @@ const HttpHeaderAnimation = () => {
             ✅ HTTP Request Sent!
           </motion.p>
         )}
+
+        {error && <p className="text-red-400 mt-4">{error}</p>}
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ const ApplicationBase = ({ domain }: DnsLookupProps) => {
 
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full flex flex-col items-center">
 
-        {showHttpHeader ? <HttpHeaderAnimation /> : <DnsLookup domain={domain}/>}
+        {showHttpHeader ? <HttpHeaderAnimation domain={domain}/> : <DnsLookup domain={domain}/>}
       </div>
 
       <motion.button

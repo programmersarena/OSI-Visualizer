@@ -1,8 +1,13 @@
 "use client";
 import { useState, useEffect, JSX } from "react";
 import { motion } from "framer-motion";
+import Encoding from "./Encoding";
 
-export default function TlsHandshake(): JSX.Element {
+type TlsHandshakeProps = {
+  url: string;
+};
+
+export default function TlsHandshake({url} : TlsHandshakeProps): JSX.Element {
   const [step, setStep] = useState<number>(0);
   const [certStep, setCertStep] = useState<number>(0);
 
@@ -40,6 +45,7 @@ export default function TlsHandshake(): JSX.Element {
 
   return (
     <div className="flex flex-col w-full p-6 items-center bg-gray-900 h-full">
+      <Encoding url={url}/>
       <h1 className="text-2xl font-bold pb-3 text-blue-400">TLS Handshake</h1>
 
       <div className="flex flex-col items-center w-full max-w-3xl border border-gray-700 p-4 rounded-lg bg-gray-800 shadow-md gap-4">
