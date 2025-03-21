@@ -2,8 +2,9 @@ import express from "express";
 import { extractUrlDetails, getDomainDetails, getIPAddress } from "./utils/dnsUtils.js";
 import { getTracerouteHops } from "./utils/tracerouteUtils.js";
 import { getPortStatus } from "./utils/portUtils.js";
-import { getHttpHeaders } from "./utils/httpUtils.js";
+import { getHttpRequestHeaders, getHttpHeaders } from "./utils/httpUtils.js";
 import { getClientMacAddress , getGatewayMacAddress } from "./utils/macAddress.js";
+import { getEncodingDetails } from "./utils/encodingUtils.js";
 const router = express.Router();
 
 router.post("/analyze", async (req, res) => {
@@ -54,6 +55,37 @@ router.post("/url-details", (req, res) => {
       res.status(500).json({ error: "Invalid URL format" });
   }
 });
+
+//Encoding
+router.post("/check-encoding", async (req, res) => {
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ error: "URL is required" });
+
+  try {
+    const encoding = await getEncodingDetails(url);
+    res.json({ encoding });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+//HTTP header details
+router.post("/get-http-request", async (req, res) => {
+  const  url  = req.body.domain;
+  if (!url) {
+      return res.status(400).json({ error: "URL is required" });
+  }
+  console.log(url);
+  try {
+      const requestLines = await getHttpRequestHeaders(url);
+      res.json({ requestLines });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+
 // MAC address route
 
 router.get("/mac-info", async (req, res) => {

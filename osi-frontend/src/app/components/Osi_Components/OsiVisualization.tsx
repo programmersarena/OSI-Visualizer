@@ -26,7 +26,7 @@ type OsiVisualizationProps = {
 const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, currentStep, isp }) => {
   const osiLayers = [
     { title: "Application Layer", content: <ApplicationBase domain={url} /> },
-    { title: "Presentation Layer", content: <TlsHandshake /> },
+    { title: "Presentation Layer", content: <TlsHandshake url={url}/> },
     { title: "Session Layer", content: "TCP Handshake Verified" },
     { title: "Transport Layer", content: <ThreeWayHandshake /> },
     {
