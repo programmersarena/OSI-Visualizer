@@ -14,6 +14,7 @@ export async function getHttpHeaders(url) {
 
 export const getHttpRequestHeaders = async (url) => {
     try {
+        
         // Make a request to the given URL
         const response = await axios.get(url, { headers: { "User-Agent": "Mozilla/5.0" } });
         // Build the request headers in a readable format
@@ -27,7 +28,6 @@ export const getHttpRequestHeaders = async (url) => {
             `Connection: keep-alive`,
         ];
     } catch (error) {
-        console.log("hi",error);
         throw new Error("Failed to fetch request headers");
     }
 };
