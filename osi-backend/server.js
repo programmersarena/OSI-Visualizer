@@ -11,6 +11,15 @@ app.get('/livecheck', (req, res) => {
     res.send('Server is running!');
   });
 
+app.get('*', (req, res) => {
+    res.status(404).send('404 Not Found');
+});
+
+
+app.get('/',(req, res) => {
+    res.send('Welcome to server\'s Homepage');
+});
+
 const server = app.listen(5000, () => console.log("Server running on port 5000"));
 
 process.on("SIGTERM", () => {
