@@ -76,7 +76,6 @@ router.post("/get-http-request", async (req, res) => {
   if (!url) {
       return res.status(400).json({ error: "URL is required" });
   }
-  console.log(url);
   try {
       const requestLines = await getHttpRequestHeaders(url);
       res.json({ requestLines });

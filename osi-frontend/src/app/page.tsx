@@ -15,13 +15,20 @@ interface OsiData {
   Layer3_Network: NetworkLayerData;
 }
 
+interface IspDetails {
+  ip: string;
+  org: string;
+  city: string;
+  region: string;
+}
+
 export default function App() {
   const [url, setUrl] = useState<string>("https://");
   const [osiData, setOsiData] = useState<OsiData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [isp, setIsp] = useState<string | null>(null);
+  const [isp, setIsp] = useState<IspDetails | null>(null);
 
   const handleSubmit = async () => {
     if (!url) return alert("Enter a valid URL");
@@ -41,7 +48,13 @@ export default function App() {
       // Fetch ISP details
       const { data: ipData } = await axios.get("https://api64.ipify.org?format=json");
       const { data: ispData } = await axios.get(`https://ipinfo.io/${ipData.ip}/json`);
-      setIsp(ispData.org || "Unknown ISP");
+      setIsp({
+        ip: ipData.ip || "Unknown IP",
+        org: ispData.org || "Unknown ISP",
+        city: ispData.city || "Unknown City",
+        region: ispData.region || "Unknown Region",
+      });
+      console.log(isp);
 
       // Simulate OSI layer visualization
       let step = 0;
