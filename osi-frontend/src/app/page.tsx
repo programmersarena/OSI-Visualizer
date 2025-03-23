@@ -37,11 +37,6 @@ export default function App() {
     setIsp(null);
 
     try {
-      // const response = await axios.post(
-      //   `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/analyze`,
-      //   { url }
-      // );
-      // setOsiData(response.data);
 
       // Fetch ISP details
       const { data: ipData } = await axios.get("https://api64.ipify.org?format=json");
@@ -61,7 +56,6 @@ export default function App() {
       const osiDatas = {
         Layer1_Physical: "Network Interface Info",
         Layer2_DataLink: "MAC Address Info",
-        // Layer3_Network: { IP: response.data, Hops: 10, Routers: [] },
         Layer3_Network: { IP: response.data},
         Layer4_Transport: "Transport Layer Details",
         Layer5_Session: "TCP Handshake Verified",

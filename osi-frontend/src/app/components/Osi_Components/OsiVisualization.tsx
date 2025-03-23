@@ -8,8 +8,6 @@ import NetworkBase from "../Network_Layer/NetworkBase";
 
 interface NetworkLayerData {
   IP: string;
-  // Hops: number;
-  // Routers: string[];
 }
 
 interface OsiData {
@@ -39,24 +37,6 @@ const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, curre
     {
       title: "Network Layer",
       content: (
-  //       <>
-  //         <p className="tesxt-gray-700">🌍 Destination IP: {osiData?.Layer3_Network.IP}</p>
-  //         <p className="text-gray-700">🛜 Total Hops: {osiData?.Layer3_Network.Hops}</p>
-  //         {isp && (
-  //   <>
-  //     <p className="text-gray-700 font-medium">
-  //       🌐 Your ISP: {isp.org} 
-  //     </p>
-      
-  //     {/* Add a new p tag to display your IP, city, and region */}
-  //     <p className="text-gray-700 font-medium">
-  //       🏠 Your IP: {isp.ip || "Unknown IP"} | City: {isp.city || "Unknown City"} | Region: {isp.region || "Unknown Region"}
-  //     </p>
-  //   </>
-  // )}
-  //         <p className="font-semibold text-gray-900 mt-2">📍 Packet Journey:</p>
-  //         <RouterVisualization routers={osiData?.Layer3_Network.Routers} />
-  //       </>
   <NetworkBase
   ip={osiData.Layer3_Network.IP}
   isp={isp}

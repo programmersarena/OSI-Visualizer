@@ -13,17 +13,6 @@ router.post("/analyze", async (req, res) => {
     try {
         const hostname = new URL(url).hostname;
         const ipAddress = await getIPAddress(hostname);
-        // const tracerouteData = await getTracerouteHops(hostname);
-
-        // const osiData = {
-        //     Layer1_Physical: "Network Interface Info",
-        //     Layer2_DataLink: "MAC Address Info",
-        //     Layer3_Network: { IP: ipAddress, Hops: tracerouteData.hopCount, Routers: tracerouteData.hopIPs },
-        //     Layer4_Transport: await getPortStatus(hostname),
-        //     Layer5_Session: "TCP Handshake Verified",
-        //     Layer6_Presentation: "SSL/TLS Encryption",
-        //     Layer7_Application: await getHttpHeaders(url),
-        // };
         res.json(ipAddress);
     } catch (error) {
         res.status(500).json({ error: error.message });
