@@ -14,11 +14,11 @@ export default function ThreeWayHandshake(): JSX.Element {
   }, []);
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 p-4 flex-grow h-full">
+    <div className="flex flex-col items-center bg-gray-900 p-4 flex-grow h-full">
       <h1 className="text-2xl font-bold text-blue-600">3-Way Handshake</h1>
 
       {/* Container for handshake steps */}
-      <div className="flex flex-col items-center w-full max-w-3xl border border-gray-300 p-4 rounded-lg bg-white shadow-md gap-4">
+      <div className="flex flex-col items-center w-full max-w-3xl border border-gray-700 p-4 rounded-lg bg-gray-700 shadow-md gap-4">
 
         {/* Step 1: SYN */}
         <div className="flex flex-row justify-between items-center w-full p-3 border border-gray-400 rounded-lg bg-gray-50">

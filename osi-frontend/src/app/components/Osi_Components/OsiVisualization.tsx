@@ -5,6 +5,7 @@ import DataLink from "../Datalink_Layer/DataLink";
 import TlsHandshake from "../Presentation_Layer/TlsHandshake";
 import ApplicationBase from "../Application_Layer/Application_Base";
 import NetworkBase from "../Network_Layer/NetworkBase";
+import SignalTransmission from "../Physical_Layer/Physical";
 
 interface NetworkLayerData {
   IP: string;
@@ -45,7 +46,7 @@ const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, curre
       ),
     },
     { title: "Data Link Layer", content: <DataLink /> },
-    { title: "Physical Layer", content: "Network Interface Info" },
+    { title: "Physical Layer", content: <SignalTransmission /> },
   ];
 
   return (
