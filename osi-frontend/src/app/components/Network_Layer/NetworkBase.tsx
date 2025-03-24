@@ -31,7 +31,7 @@ const NetworkBase: React.FC<NetworkBaseProps> = ({ ip, isp, url }) => {
           `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/network-traceroute`,
           { url }
         );
-        const updatedRouters = [ip, ...response.data.hopIPs];
+        const updatedRouters = [isp?.ip, ...response.data.hopIPs];
 
         // Assuming the response contains hops and routers info
         setHops(response.data.hopCount + 1); // Add 1 to hop count
@@ -45,7 +45,7 @@ const NetworkBase: React.FC<NetworkBaseProps> = ({ ip, isp, url }) => {
     };
 
     fetchNetworkData(); // Call the function to fetch the data
-  }, [ip, url]); // Added `ip` and `url` to the dependencies array
+  }, [ip, url,isp?.ip]); // Added `ip` and `url` to the dependencies array
 
   if (loading) {
     // If data is still loading, show the loading screen
@@ -53,7 +53,7 @@ const NetworkBase: React.FC<NetworkBaseProps> = ({ ip, isp, url }) => {
   }
 
   return (
-    <div className=" bg-gray-700 border border-gray-400 rounded-lg">
+    <div className=" bg-gray-700 p-4  border border-gray-400 rounded-lg">
       <p className="text-gray-200">🌍 Destination IP: {ip}</p>
       <p className="text-gray-200">🛜 Total Hops: {hops}</p>
       {isp && (
