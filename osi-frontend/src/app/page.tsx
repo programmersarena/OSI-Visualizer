@@ -54,7 +54,7 @@ export default function App() {
       );
       
       const osiDatas = {
-        Layer1_Physical: "Network Interface Info",
+        Layer1_Physical: "Physical Layer Details",
         Layer2_DataLink: "MAC Address Info",
         Layer3_Network: { IP: response.data},
         Layer4_Transport: "Transport Layer Details",

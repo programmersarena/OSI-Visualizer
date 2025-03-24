@@ -34,11 +34,11 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
       {/* Source Device */}
       <div className="flex flex-col items-center">
         <span className="text-3xl">💻</span>
-        <p className="text-xs font-medium">Source</p>
+        <p className="text-xs font-medium  text-gray-200">Source</p>
       </div>
 
       {/* Routers Grid with Routes */}
-      <div className="flex flex-col items-center gap-6 relative">
+      <div className="flex  flex-col items-center gap-6 relative">
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex items-center gap-6 relative">
             {row.map((ip, index) => {
@@ -47,7 +47,7 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
                 <div key={ip} className="flex flex-col items-center relative">
                   {/* Router Icon */}
                   <span className="text-3xl">📡</span>
-                  <p className="text-xs text-gray-600">{ip}</p>
+                  <p className="text-xs text-gray-200">{ip}</p>
 
                   {/* Dotted line between routers */}
                   {index < row.length - 1 && (
@@ -75,7 +75,7 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
       {/* Destination */}
       <div className="flex flex-col items-center mt-6">
         <span className="text-3xl">🌍</span>
-        <p className="text-xs font-medium">Destination</p>
+        <p className="text-xs text-gray-200 font-medium">Destination</p>
       </div>
 
       {/* Final Packet Arrival Animation */}

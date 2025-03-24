@@ -53,18 +53,18 @@ const NetworkBase: React.FC<NetworkBaseProps> = ({ ip, isp, url }) => {
   }
 
   return (
-    <div>
-      <p className="text-gray-700">🌍 Destination IP: {ip}</p>
-      <p className="text-gray-700">🛜 Total Hops: {hops}</p>
+    <div className=" bg-gray-700 border border-gray-400 rounded-lg">
+      <p className="text-gray-200">🌍 Destination IP: {ip}</p>
+      <p className="text-gray-200">🛜 Total Hops: {hops}</p>
       {isp && (
         <>
-          <p className="text-gray-700 font-medium">🌐 Your ISP: {isp.org}</p>
-          <p className="text-gray-700 font-medium">
+          <p className="text-gray-200 font-medium">🌐 Your ISP: {isp.org}</p>
+          <p className="text-gray-200 font-medium">
             🏠 Your IP: {isp.ip || "Unknown IP"} | City: {isp.city || "Unknown City"} | Region: {isp.region || "Unknown Region"}
           </p>
         </>
       )}
-      <p className="font-semibold text-gray-900 mt-2">📍 Packet Journey:</p>
+      <p className="font-semibold text-gray-200 mt-2">📍 Packet Journey:</p>
       <RouterVisualization routers={routers} />
 
       {/* Show error message if an error exists */}
