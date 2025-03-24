@@ -1,10 +1,10 @@
 import express from "express";
 import { extractUrlDetails, getDomainDetails, getIPAddress } from "./utils/dnsUtils.js";
 import { getTracerouteHops } from "./utils/tracerouteUtils.js";
-import { getPortStatus } from "./utils/portUtils.js";
 import { getHttpRequestHeaders, getHttpHeaders } from "./utils/httpUtils.js";
 import { getClientMacAddress , getGatewayMacAddress } from "./utils/macAddress.js";
 import { getEncodingDetails } from "./utils/encodingUtils.js";
+import { getTransmissionMode } from "./utils/transmissionUtils.js";
 const router = express.Router();
 
 router.post("/analyze", async (req, res) => {
@@ -104,6 +104,16 @@ router.get("/mac-info", async (req, res) => {
       });
     } catch (error) {
       console.error("Error fetching MAC addresses:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  router.get("/get-transmission", (req, res) => {
+    try {
+      const transmissionMode = getTransmissionMode();
+      res.json({ transmissionMode });
+    } catch (error) {
+      console.error("Error fetching transmission mode:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   });
