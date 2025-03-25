@@ -4,9 +4,9 @@ import OsiLayer from "./OsiLayer";
 import DataLink from "../Datalink_Layer/DataLink";
 import TlsHandshake from "../Presentation_Layer/TlsHandshake";
 import ApplicationBase from "../Application_Layer/Application_Base";
+import SessionLayer from "../Session_Layer/Session";
 import NetworkBase from "../Network_Layer/NetworkBase";
 import PhysicalLayer from "../Physical_Layer/Physical";
-import SessionLayer from "../Session_Layer/Session";
 
 interface NetworkLayerData {
   IP: string;
