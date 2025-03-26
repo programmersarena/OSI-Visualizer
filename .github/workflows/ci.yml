@@ -27,7 +27,7 @@ jobs:
           sleep 10
 
       - name: Health Check
-        run: curl --fail http://localhost:5000/livecheck || exit 1
+        run: curl --fail http://localhost:5000/ || exit 1
 
       - name: Stop and Remove Container
         run: docker stop backend-container && docker rm backend-container

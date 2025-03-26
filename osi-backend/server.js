@@ -8,15 +8,16 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
+
+app.get('/', (req, res) => res.send("Welcome to the server's homepage"));
+app.get('/livecheck', (req, res) => res.send('Server is running!'));
+app.get('*', (req, res) => res.status(404).send('404 Not Found'));
+
 app.use(cors());
 app.use(express.json());
 app.use('/api', routes);
 
 const activeSessions = {};
-
-app.get('/', (req, res) => res.send("Welcome to the server's homepage"));
-app.get('/livecheck', (req, res) => res.send('Server is running!'));
-app.get('*', (req, res) => res.status(404).send('404 Not Found'));
 
 io.on("connection", (socket) => {
 
