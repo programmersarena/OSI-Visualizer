@@ -9,14 +9,14 @@ app.use("/api", routes);
 
 app.get('/livecheck', (req, res) => {
     res.send('Server is running!');
-  });
+});
 
 app.get('*', (req, res) => {
     res.status(404).send('404 Not Found');
 });
 
 
-app.get('/',(req, res) => {
+app.get('/', (req, res) => {
     res.send('Welcome to server\'s Homepage');
 });
 
