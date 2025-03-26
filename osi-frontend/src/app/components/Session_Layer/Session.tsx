@@ -5,7 +5,6 @@ const socket = io("http://localhost:5000");
 
 interface SessionData {
     [key: string]: {
-        username: string;
         startTime: string;
         status: string;
     };
@@ -52,7 +51,6 @@ export default function SessionLayer() {
                     {Object.entries(sessions).map(([id, session]) => (
                         <li key={id} className="p-4 border rounded-lg shadow-sm mb-2 bg-gray-100">
                             <p>🆔 <strong>Session ID:</strong> {id}</p>
-                            <p>👤 <strong>Username:</strong> {session.username}</p>
                             <p>🕰 <strong>Start Time:</strong> {new Date(session.startTime).toLocaleString()}</p>
                             <p>📊 <strong>Status:</strong> {session.status}</p>
                         </li>
