@@ -21,9 +21,6 @@ jobs:
         run: |
           docker build -t osi-backend:latest -f ./osi-backend/Dockerfile.backend ./osi-backend
 
-      - name: Stop and Remove Container
-        run: docker stop backend-container && docker rm backend-container
-
   build-frontend:
     name: Build and Test Frontend
     runs-on: ubuntu-latest
@@ -35,6 +32,3 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t osi-frontend:latest -f ./osi-frontend/Dockerfile.frontend ./osi-frontend
-
-      - name: Stop and Remove Container
-        run: docker stop frontend-container && docker rm frontend-container
