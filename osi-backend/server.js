@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
 });
 
 
-server.listen(5000, () => console.log("Server running on port 5000"));
+server = app.listen(5000, () => console.log("Server running on port 5000"));
 
 process.on("SIGTERM", () => {
     console.log("SIGTERM received. Shutting down gracefully...");
