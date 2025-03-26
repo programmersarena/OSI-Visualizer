@@ -4,6 +4,7 @@ import OsiLayer from "./OsiLayer";
 import DataLink from "../Datalink_Layer/DataLink";
 import TlsHandshake from "../Presentation_Layer/TlsHandshake";
 import ApplicationBase from "../Application_Layer/Application_Base";
+import SessionLayer from "../Session_Layer/Session";
 import NetworkBase from "../Network_Layer/NetworkBase";
 import PhysicalLayer from "../Physical_Layer/Physical";
 
@@ -32,8 +33,8 @@ type OsiVisualizationProps = {
 const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, currentStep, isp }) => {
   const osiLayers = [
     { title: "Application Layer", content: <ApplicationBase domain={url} /> },
-    { title: "Presentation Layer", content: <TlsHandshake url={url}/> },
-    { title: "Session Layer", content: "TCP Handshake Verified" },
+    { title: "Presentation Layer", content: <TlsHandshake url={url} /> },
+    { title: "Session Layer", content: <SessionLayer /> },
     { title: "Transport Layer", content: <ThreeWayHandshake /> },
     {
       title: "Network Layer",
