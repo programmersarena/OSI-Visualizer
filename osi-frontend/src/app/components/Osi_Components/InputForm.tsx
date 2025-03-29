@@ -24,7 +24,7 @@ const InputForm: React.FC<InputFormProps> = ({ url, setUrl, handleSubmit, loadin
         onChange={(e) => setUrl(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Enter website URL"
-        className="p-2 border-2 border-blue-500 rounded-lg w-80 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-700 placeholder-gray-500 text-gray-700"
+        className="p-2 border-2 border-blue-500 rounded-lg w-80 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-700 placeholder-gray-500 text-white-900"
       />
       <button
         onClick={handleSubmit}
