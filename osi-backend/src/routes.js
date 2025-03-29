@@ -97,7 +97,7 @@ router.get("/mac-info", async (req, res) => {
     try {
       const clientMac = getClientMacAddress();
       const gatewayMac = await getGatewayMacAddress();
-  
+      console.log(clientMac, "  ", gatewayMac);
       res.json({
         clientMac: clientMac,
         gatewayMac: gatewayMac,
@@ -111,6 +111,7 @@ router.get("/mac-info", async (req, res) => {
   router.get("/get-transmission", (req, res) => {
     try {
       const transmissionMode = getTransmissionMode();
+      console.log("hi");
       res.json({ transmissionMode });
     } catch (error) {
       console.error("Error fetching transmission mode:", error);
