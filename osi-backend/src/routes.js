@@ -97,7 +97,7 @@ router.get("/mac-info", async (req, res) => {
     try {
       const clientMac = getClientMacAddress();
       const gatewayMac = await getGatewayMacAddress();
-  
+      console.log(clientMac, "  ", gatewayMac);
       res.json({
         clientMac: clientMac,
         gatewayMac: gatewayMac,

@@ -25,8 +25,8 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
 
   // Split routers into multiple rows, max 5 per row
   const rows = [];
-  for (let i = 0; i < routers.length; i += 5) {
-    rows.push(routers.slice(i, i + 5));
+  for (let i = 0; i < routers.length; i += 4) {
+    rows.push(routers.slice(i, i + 4));
   }
 
   return (

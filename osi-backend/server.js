@@ -5,22 +5,23 @@ import { Server } from 'socket.io';
 import routes from './src/routes.js';
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
 
+// ✅ CORS should be added before defining routes
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(express.json());
+
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: 'http://localhost:3000', credentials: true } });
+
+app.use('/api', routes);
 
 app.get('/', (req, res) => res.send("Welcome to the server's homepage"));
 app.get('/livecheck', (req, res) => res.send('Server is running!'));
 app.get('*', (req, res) => res.status(404).send('404 Not Found'));
 
-app.use(cors());
-app.use(express.json());
-app.use('/api', routes);
-
 const activeSessions = {};
 
 io.on("connection", (socket) => {
-
     activeSessions[socket.id] = {
         startTime: new Date(),
         status: "Established"
@@ -49,8 +50,13 @@ process.on('SIGINT', gracefulShutdown);
 
 function gracefulShutdown() {
     console.log('Shutting down gracefully...');
-    server.close(() => {
-        console.log('Server closed.');
-        process.exit(0);
+    
+    io.close(() => {
+        console.log('WebSocket server closed.');
+        
+        server.close(() => {
+            console.log('HTTP server closed.');
+            process.exit(0);
+        });
     });
 }
