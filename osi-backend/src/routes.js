@@ -111,7 +111,6 @@ router.get("/mac-info", async (req, res) => {
   router.get("/get-transmission", (req, res) => {
     try {
       const transmissionMode = getTransmissionMode();
-      console.log("hi");
       res.json({ transmissionMode });
     } catch (error) {
       console.error("Error fetching transmission mode:", error);
