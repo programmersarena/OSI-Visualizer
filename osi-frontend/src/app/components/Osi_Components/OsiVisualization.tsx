@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ThreeWayHandshake from "../Transport_Layer/ThreeWayHandshake";
 import OsiLayer from "./OsiLayer";
 import DataLink from "../Datalink_Layer/DataLink";
@@ -17,7 +17,7 @@ interface OsiData {
 }
 
 interface IspDetails {
-  ip:string;
+  ip: string;
   org: string;
   city: string;
   region: string;
@@ -31,6 +31,12 @@ type OsiVisualizationProps = {
 };
 
 const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, currentStep, isp }) => {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0); // Initially expand the first layer
+
+  const toggleLayer = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index); // Toggle the layer
+  };
+
   const osiLayers = [
     { title: "Application Layer", content: <ApplicationBase domain={url} /> },
     { title: "Presentation Layer", content: <TlsHandshake url={url} /> },
@@ -38,22 +44,25 @@ const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, curre
     { title: "Transport Layer", content: <ThreeWayHandshake /> },
     {
       title: "Network Layer",
-      content: (
-  <NetworkBase
-  ip={osiData.Layer3_Network.IP}
-  isp={isp}
-  url={url}
-/>
-      ),
+      content: <NetworkBase ip={osiData.Layer3_Network.IP} isp={isp} url={url} />,
+      alwaysRender: true,
     },
     { title: "Data Link Layer", content: <DataLink /> },
     { title: "Physical Layer", content: <PhysicalLayer /> },
   ];
 
   return (
-    <div className="mt-6 w-full max-w-4xl bg-gray-200 p-4 rounded-lg shadow-md">
+    <div className="mt-6 w-full max-w-4xl bg-gray-500 p-4 rounded-lg shadow-md">
       {osiLayers.map((layer, index) => (
-        <OsiLayer key={index} title={layer.title} content={layer.content} isVisible={currentStep >= index + 1} />
+        <OsiLayer
+          key={index}
+          title={layer.title}
+          content={layer.content}
+          isVisible={currentStep >= index + 1}
+          isExpanded={expandedIndex === index}
+          toggle={() => toggleLayer(index)}
+          alwaysRender={layer.alwaysRender || false}
+        />
       ))}
     </div>
   );

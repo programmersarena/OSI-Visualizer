@@ -79,12 +79,14 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-4 text-blue-600">OSI Layer Visualizer</h1>
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-black via-indigo-100 to-black p-4 text-white">
+      <h1 className="text-3xl font-bold mb-4 text-white-900">🚀 OSI Layer Visualizer</h1>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} loading={loading} />
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-
+      {error && <p className="text-red-400 mt-2">{error}</p>}
+  
       {osiData && <OsiVisualization osiData={osiData} url={url} currentStep={currentStep} isp={isp} />}
     </div>
   );
-}
+  
+  
+}  

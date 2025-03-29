@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import DnsLookup from "./DnsLookup";
-import HttpHeaderAnimation from "./HttpRequestAnimation"
-import { motion } from "framer-motion";
+import HttpHeaderAnimation from "./HttpRequestAnimation";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import axios from "axios";
+
 type DnsLookupProps = {
-    domain: string;
-  };
+  domain: string;
+};
+
 const ApplicationBase = ({ domain }: DnsLookupProps) => {
   const [showHttpHeader, setShowHttpHeader] = useState(false);
   const [protocol, setProtocol] = useState<string | null>(null);
@@ -45,28 +47,32 @@ const ApplicationBase = ({ domain }: DnsLookupProps) => {
       <h1 className="text-3xl font-bold mb-6">🌐 OSI Layer Visualization</h1>
 
       <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full flex flex-col items-center">
-
-        {showHttpHeader ? <HttpHeaderAnimation domain={domain}/> : <DnsLookup domain={domain}/>}
+        {showHttpHeader ? <HttpHeaderAnimation domain={domain} /> : <DnsLookup domain={domain} />}
       </div>
 
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+      <button
         onClick={() => setShowHttpHeader((prev) => !prev)}
-        className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-md shadow-md"
+        className="mt-6 flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md"
       >
         {showHttpHeader ? "🔄 Restart DNS Lookup" : "➡️ Proceed to HTTP Header"}
-      </motion.button>
+        {showHttpHeader ? (
+          <ChevronUp className="ml-2" size={20} />
+        ) : (
+          <ChevronDown className="ml-2" size={20} />
+        )}
+      </button>
 
-      <p className="text-lg mt-4 font-semibold text-blue-700">
-        🌐 Protocol: <span className="text-white">{protocol || "N/A"}</span>
-      </p>
-      <p className="text-lg font-semibold text-green-700">
-        🏠 Domain: <span className="text-white">{extractedDomain || "N/A"}</span>
-      </p>
-      <p className="text-lg font-semibold text-purple-700">
-        📍 Path: <span className="text-white">{path || "N/A"}</span>
-      </p>
+      <div className="mt-4">
+        <p className="text-lg font-semibold text-blue-700">
+          🌐 Protocol: <span className="text-white">{protocol || "N/A"}</span>
+        </p>
+        <p className="text-lg font-semibold text-green-700">
+          🏠 Domain: <span className="text-white">{extractedDomain || "N/A"}</span>
+        </p>
+        <p className="text-lg font-semibold text-purple-700">
+          📍 Path: <span className="text-white">{path || "N/A"}</span>
+        </p>
+      </div>
     </div>
   );
 };
