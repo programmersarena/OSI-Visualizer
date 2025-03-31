@@ -12,11 +12,13 @@ interface SessionData {
 
 export default function SessionLayer() {
     const [sessions, setSessions] = useState<SessionData>({});
+    const [buttonVisible, setButtonVisible] = useState(true);
 
     useEffect(() => {
         socket.on("session-update", (data: SessionData) => {
             console.log("Received active sessions:", data);
             setSessions(data);
+            setButtonVisible(false); // Hide button after receiving sessions
         });
 
         return () => {
@@ -32,9 +34,11 @@ export default function SessionLayer() {
     return (
         <div className="p-4">
             <h2 className="text-xl font-bold mb-4">Session Layer - Active Sessions</h2>
-            <button onClick={handleGetSessions} className="p-2 bg-blue-500 text-white rounded">
-                Get All Active Sessions
-            </button>
+            {buttonVisible && (
+                <button onClick={handleGetSessions} className="p-2 bg-blue-500 text-white rounded">
+                    Get All Active Sessions
+                </button>
+            )}
 
             {Object.keys(sessions).length === 0 ? (
                 <p className="mt-4">No active sessions.</p>
