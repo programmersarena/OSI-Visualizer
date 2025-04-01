@@ -7,7 +7,7 @@ type OsiLayerProps = {
   isVisible: boolean;
   isExpanded: boolean;
   toggle: () => void;
-  alwaysRender?: boolean; // For Network Layer
+  alwaysRender?: boolean;
 };
 
 const OsiLayer: React.FC<OsiLayerProps> = ({
@@ -46,9 +46,8 @@ const OsiLayer: React.FC<OsiLayerProps> = ({
       </button>
 
       <div
-        className={`transition-all duration-500 overflow-hidden ${
-          isExpanded ? "max-h-screen opacity-100 mt-2" : "max-h-0 opacity-0"
-        }`}
+        className={`transition-all duration-500 overflow-hidden ${isExpanded ? "max-h-screen opacity-100 mt-2" : "max-h-0 opacity-0"
+          }`}
       >
         {shouldRender && (
           <div className="text-sm text-gray-700 p-2 bg-white rounded-md shadow-inner">
