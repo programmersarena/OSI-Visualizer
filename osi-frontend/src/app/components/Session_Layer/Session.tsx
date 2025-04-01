@@ -18,7 +18,7 @@ export default function SessionLayer() {
         socket.on("session-update", (data: SessionData) => {
             console.log("Received active sessions:", data);
             setSessions(data);
-            setButtonVisible(false); // Hide button after receiving sessions
+            setButtonVisible(false);
         });
 
         return () => {
@@ -27,7 +27,6 @@ export default function SessionLayer() {
     }, []);
 
     const handleGetSessions = () => {
-        console.log("Requesting active sessions...");
         socket.emit("request-sessions");
     };
 
