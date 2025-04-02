@@ -31,7 +31,7 @@ export default function SessionLayer() {
 
     useEffect(() => {
         const updateDurations = () => {
-            setSessionDurations((prevDurations) => {
+            setSessionDurations(() => {
                 const updatedDurations: { [key: string]: string } = {};
                 Object.entries(sessionsRef.current).forEach(([id, session]) => {
                     const elapsed = Math.floor((Date.now() - new Date(session.startTime).getTime()) / 1000);
