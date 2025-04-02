@@ -23,7 +23,7 @@ const activeSessions = {};
 
 io.on("connection", (socket) => {
     activeSessions[socket.id] = {
-        startTime: new Date(),
+        startTime: new Date().toISOString(),
         status: "Established"
     };
 
@@ -31,15 +31,14 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         if (activeSessions[socket.id]) {
-            activeSessions[socket.id].status = "Disconnected";
+            delete activeSessions[socket.id];
             io.emit("session-update", activeSessions);
             console.log(`User disconnected: ${socket.id}`);
-            delete activeSessions[socket.id];
         }
     });
 
     socket.on("request-sessions", () => {
-        io.emit("session-update", activeSessions);
+        socket.emit("session-update", activeSessions);
     });
 });
 
@@ -50,10 +49,10 @@ process.on('SIGINT', gracefulShutdown);
 
 function gracefulShutdown() {
     console.log('Shutting down gracefully...');
-    
+
     io.close(() => {
         console.log('WebSocket server closed.');
-        
+
         server.close(() => {
             console.log('HTTP server closed.');
             process.exit(0);

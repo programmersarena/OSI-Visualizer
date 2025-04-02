@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 
 const socket = io("http://localhost:5000");
@@ -12,18 +12,37 @@ interface SessionData {
 
 export default function SessionLayer() {
     const [sessions, setSessions] = useState<SessionData>({});
+    const [sessionDurations, setSessionDurations] = useState<{ [key: string]: string }>({});
     const [buttonVisible, setButtonVisible] = useState(true);
+    const sessionsRef = useRef<SessionData>({});
 
     useEffect(() => {
         socket.on("session-update", (data: SessionData) => {
             console.log("Received active sessions:", data);
             setSessions(data);
+            sessionsRef.current = data;
             setButtonVisible(false);
         });
 
         return () => {
             socket.off("session-update");
         };
+    }, []);
+
+    useEffect(() => {
+        const updateDurations = () => {
+            setSessionDurations((prevDurations) => {
+                const updatedDurations: { [key: string]: string } = {};
+                Object.entries(sessionsRef.current).forEach(([id, session]) => {
+                    const elapsed = Math.floor((Date.now() - new Date(session.startTime).getTime()) / 1000);
+                    updatedDurations[id] = `${Math.floor(elapsed / 60)}m ${elapsed % 60}s`;
+                });
+                return updatedDurations;
+            });
+        };
+
+        const interval = setInterval(updateDurations, 1000);
+        return () => clearInterval(interval);
     }, []);
 
     const handleGetSessions = () => {
@@ -47,6 +66,7 @@ export default function SessionLayer() {
                         <li key={id} className="p-4 border rounded-lg shadow-sm mb-2 bg-gray-100">
                             <p>🆔 <strong>Session ID:</strong> {id}</p>
                             <p>🕰 <strong>Start Time:</strong> {new Date(session.startTime).toLocaleString()}</p>
+                            <p>⏳ <strong>Elapsed Time:</strong> {sessionDurations[id] || "0m 0s"}</p>
                             <p>📊 <strong>Status:</strong> {session.status}</p>
                         </li>
                     ))}
