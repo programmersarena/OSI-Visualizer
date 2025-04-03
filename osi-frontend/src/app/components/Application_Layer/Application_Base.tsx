@@ -27,7 +27,7 @@ const ApplicationBase = ({ domain }: DnsLookupProps) => {
           domain: string;
           path: string;
         }>(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/url-details`,
+          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/dns/url-details`,
           { domain: cleanDomain }
         );
 

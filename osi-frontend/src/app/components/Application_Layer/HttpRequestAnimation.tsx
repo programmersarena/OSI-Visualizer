@@ -8,7 +8,7 @@ type HttpHeaderAnimationProps = {
   domain: string;
 };
 
-const HttpHeaderAnimation = ({domain} : HttpHeaderAnimationProps) => {
+const HttpHeaderAnimation = ({ domain }: HttpHeaderAnimationProps) => {
   const [requestLines, setRequestLines] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ const HttpHeaderAnimation = ({domain} : HttpHeaderAnimationProps) => {
     setSent(false);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/get-http-request`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/http/get-http-request`,
         { domain }
       );
       setRequestLines(response.data.requestLines);

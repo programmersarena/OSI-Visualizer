@@ -28,7 +28,7 @@ const NetworkBase: React.FC<NetworkBaseProps> = ({ ip, isp, url }) => {
       try {
         // API call to get hops and routers data based on the IP
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/network-traceroute`,
+          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/network/network-traceroute`,
           { url }
         );
         const updatedRouters = [isp?.ip, ...response.data.hopIPs];
@@ -45,7 +45,7 @@ const NetworkBase: React.FC<NetworkBaseProps> = ({ ip, isp, url }) => {
     };
 
     fetchNetworkData(); // Call the function to fetch the data
-  }, [ip, url,isp?.ip]); // Added `ip` and `url` to the dependencies array
+  }, [ip, url, isp?.ip]); // Added `ip` and `url` to the dependencies array
 
   if (loading) {
     // If data is still loading, show the loading screen

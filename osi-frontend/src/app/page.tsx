@@ -49,20 +49,20 @@ export default function App() {
       });
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/analyze`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/dns/analyze`,
         { url }
       );
-      
+
       const osiDatas = {
         Layer1_Physical: "Physical Layer Details",
         Layer2_DataLink: "MAC Address Info",
-        Layer3_Network: { IP: response.data},
+        Layer3_Network: { IP: response.data },
         Layer4_Transport: "Transport Layer Details",
         Layer5_Session: "TCP Handshake Verified",
         Layer6_Presentation: "SSL/TLS Encryption",
         Layer7_Application: "Application layer details",
-    };
-  setOsiData(osiDatas);
+      };
+      setOsiData(osiDatas);
       // Simulate OSI layer visualization
       let step = 0;
       const osiInterval = setInterval(() => {
@@ -83,10 +83,10 @@ export default function App() {
       <h1 className="text-3xl font-bold mb-4 text-white-900">🚀 OSI Layer Visualizer</h1>
       <InputForm url={url} setUrl={setUrl} handleSubmit={handleSubmit} loading={loading} />
       {error && <p className="text-red-400 mt-2">{error}</p>}
-  
+
       {osiData && <OsiVisualization osiData={osiData} url={url} currentStep={currentStep} isp={isp} />}
     </div>
   );
-  
-  
+
+
 }  

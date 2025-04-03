@@ -2,14 +2,14 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const PhysicalLayer = () => {
-  const [bits, setBits] = useState(["1", "0", "1", "1", "0", "1", "0","1", "0", "1", "0" ,"1", "0"]);
+  const [bits, setBits] = useState(["1", "0", "1", "1", "0", "1", "0", "1", "0", "1", "0", "1", "0"]);
   const [transmissionMedium, setTransmissionMedium] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTransmissionMode = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/get-transmission");
+        const res = await fetch("http://localhost:5000/api/transmission/get-transmission");
         const data = await res.json();
         setTransmissionMedium(data.transmissionMode);
       } catch (error) {
@@ -35,7 +35,7 @@ const PhysicalLayer = () => {
     <div className="flex flex-col  items-center justify-center rounded-lg bg-gray-900 text-white">
       <h1 className="text-xl mt-2 font-bold mb-4">
         Transmission Mode - {loading ? "Loading..." : transmissionMedium}
-       </h1>
+      </h1>
       <div className="relative w-full max-w-2xl h-40 border border-gray-300 rounded-lg overflow-hidden">
         {/* Simulating Wired Signal Line */}
         <div className="absolute top-1/3 left-0 w-full h-0.5 bg-blue-500" />

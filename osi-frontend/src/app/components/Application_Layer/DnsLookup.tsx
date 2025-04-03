@@ -31,7 +31,7 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
           domain: string;
           path: string;
         }>(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/dns-lookup`,
+          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/dns/dns-lookup`,
           { domain: cleanDomain }
         );
         setProperDomain(cleanDomain);
@@ -102,52 +102,51 @@ export default function DnsLookup({ domain }: DnsLookupProps) {
 
       {/* Dropdown Toggle Button */}
       <div
-  className="w-full p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md cursor-pointer flex justify-between items-center"
-  onClick={() => setShowDetails(!showDetails)}
->
-  <h3 className="text-lg font-bold text-yellow-700">⚠️ DNS Adventure Time! 🌍</h3>
-  <FaChevronDown
-    className={`w-5 h-5 text-yellow-700 transition-transform duration-900 ${
-      showDetails ? "rotate-180" : "rotate-0"
-    }`}
-  />
-</div>
+        className="w-full p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md cursor-pointer flex justify-between items-center"
+        onClick={() => setShowDetails(!showDetails)}
+      >
+        <h3 className="text-lg font-bold text-yellow-700">⚠️ DNS Adventure Time! 🌍</h3>
+        <FaChevronDown
+          className={`w-5 h-5 text-yellow-700 transition-transform duration-900 ${showDetails ? "rotate-180" : "rotate-0"
+            }`}
+        />
+      </div>
 
 
-{/* Animated Dropdown Content */}
-<AnimatePresence>
-  {showDetails && (
-    <motion.div
-      initial={{ maxHeight: 0, opacity: 0 }}
-      animate={{ maxHeight: 500, opacity: 1 }}
-      exit={{ maxHeight: 0, opacity: 0 }}
-      transition={{ duration: 0.9, ease: "easeInOut" }}
-      className="w-full bg-yellow-50 overflow-hidden p-4 rounded-lg shadow-md"
-    >
-      <p className="text-gray-800">
-        Your browser tries to resolve the domain in a series of steps:
-      </p>
-      <ul className="list-disc list-inside text-gray-700 mt-2">
-        <li>
-          🧠 First, it checks its <span className="text-blue-600">cache</span> for the IP address.
-        </li>
-        <li>
-          💻 Then it asks your <span className="text-green-600">OS</span> for help.
-        </li>
-        <li>
-          🌐 Still no luck? It queries your <span className="text-purple-600">ISP&apos;s DNS server</span>.
-        </li>
-        <li>
-          🚀 If needed, it goes on a <span className="text-blue-500">DNS World Tour</span>:
-          <ul className="list-disc ml-5">
-            <li>Root DNS → TLD DNS → Authoritative DNS</li>
-            <li>Finally, it gets the IP address and returns it to your browser. 🎉</li>
-          </ul>
-        </li>
-      </ul>
-    </motion.div>
-  )}
-</AnimatePresence>
+      {/* Animated Dropdown Content */}
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            initial={{ maxHeight: 0, opacity: 0 }}
+            animate={{ maxHeight: 500, opacity: 1 }}
+            exit={{ maxHeight: 0, opacity: 0 }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+            className="w-full bg-yellow-50 overflow-hidden p-4 rounded-lg shadow-md"
+          >
+            <p className="text-gray-800">
+              Your browser tries to resolve the domain in a series of steps:
+            </p>
+            <ul className="list-disc list-inside text-gray-700 mt-2">
+              <li>
+                🧠 First, it checks its <span className="text-blue-600">cache</span> for the IP address.
+              </li>
+              <li>
+                💻 Then it asks your <span className="text-green-600">OS</span> for help.
+              </li>
+              <li>
+                🌐 Still no luck? It queries your <span className="text-purple-600">ISP&apos;s DNS server</span>.
+              </li>
+              <li>
+                🚀 If needed, it goes on a <span className="text-blue-500">DNS World Tour</span>:
+                <ul className="list-disc ml-5">
+                  <li>Root DNS → TLD DNS → Authoritative DNS</li>
+                  <li>Finally, it gets the IP address and returns it to your browser. 🎉</li>
+                </ul>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
