@@ -31,7 +31,7 @@ Follow these steps to set up and run the OSI Model Visualization Tool:
 cd osi-backend
 npm install
 npm run start
-
+```
 
 ### 2️⃣ Frontend Setup
 ```sh
