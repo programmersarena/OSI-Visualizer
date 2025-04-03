@@ -12,7 +12,7 @@ const DataLinkLayer = () => {
   useEffect(() => {
     const fetchMacAddresses = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/mac-info`);
+        const response = await axios.get(`${API_URL}/api/mac/mac-info`);
         setMacInfo(response.data);
       } catch (err) {
         setError(`Failed to fetch MAC addresses: ${err}`);
@@ -33,7 +33,7 @@ const DataLinkLayer = () => {
 
       {macInfo && (
         <div className="mt-4 p-3 bg-gray-600 rounded-lg">
-        
+
           <p className="font-semibold text-gray-200">🔵 Source MAC (Your Machine):</p>
           <p className="text-gray-300">{macInfo.clientMac}</p>
 

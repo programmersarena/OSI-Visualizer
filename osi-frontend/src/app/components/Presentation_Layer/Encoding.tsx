@@ -19,7 +19,7 @@ const EncodingChecker: React.FC<EncodingCheckerProps> = ({ url }) => {
 
     try {
       const response = await axios.post<{ encoding: string }>(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/check-encoding`,
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/encoding/check-encoding`,
         { url }
       );
 
