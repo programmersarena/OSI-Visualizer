@@ -19,3 +19,23 @@ This tool provides an **interactive way to visualize** how data packets move thr
 | **3. Network** | Routing and addressing | IP, ICMP |
 | **2. Data Link** | MAC addressing and framing | Ethernet, Wi-Fi |
 | **1. Physical** | Hardware transmission | Cables, Radio Signals |
+
+---
+
+## 🚀 How to Run the Application  
+
+Follow these steps to set up and run the OSI Model Visualization Tool:  
+
+### 1️⃣ Backend Setup  
+```sh
+cd osi-backend
+npm install
+npm run start
+```
+
+### 2️⃣ Frontend Setup
+```sh
+cd osi-frontend
+npm install
+npm run build
+npm run dev
