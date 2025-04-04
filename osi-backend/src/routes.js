@@ -5,6 +5,7 @@ import httpRoutes from "./routes/httpRoutes.js";
 import encodingRoutes from "./routes/encodingRoutes.js";
 import macRoutes from "./routes/macRoutes.js";
 import transmissionRoutes from "./routes/transmissionRoutes.js";
+import tlsHandShake from "./routes/tlsHandshake.js"
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.use("/http", httpRoutes);
 router.use("/encoding", encodingRoutes);
 router.use("/mac", macRoutes);
 router.use("/transmission", transmissionRoutes);
+router.use("/tls-handshake", tlsHandShake)
 
 export default router;
