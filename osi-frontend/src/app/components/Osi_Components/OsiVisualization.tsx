@@ -7,6 +7,7 @@ import ApplicationBase from "../Application_Layer/Application_Base";
 import SessionLayer from "../Session_Layer/Session";
 import NetworkBase from "../Network_Layer/NetworkBase";
 import PhysicalLayer from "../Physical_Layer/Physical";
+import TlsHandshakeRealTime from "../Presentation_Layer/TlsHandshakeRealTime";
 
 interface NetworkLayerData {
   IP: string;
@@ -31,15 +32,30 @@ type OsiVisualizationProps = {
 };
 
 const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, currentStep, isp }) => {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(0); // Initially expand the first layer
-
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+  const [useRealTimeTLS, setUseRealTimeTLS] = useState(false);
   const toggleLayer = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index); // Toggle the layer
+    setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   const osiLayers = [
     { title: "Application Layer", content: <ApplicationBase domain={url} /> },
-    { title: "Presentation Layer", content: <TlsHandshake url={url} /> },
+    {
+      title: "Presentation Layer",
+      content: (
+        <div>
+          <div className="mb-3">
+            <button
+              onClick={() => setUseRealTimeTLS(!useRealTimeTLS)}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            >
+              {useRealTimeTLS ? "Switch to Simulated TLS" : "Switch to Real-Time TLS"}
+            </button>
+          </div>
+          {useRealTimeTLS ? <TlsHandshakeRealTime url={url} /> : <TlsHandshake url={url} />}
+        </div>
+      ),
+    },
     { title: "Session Layer", content: <SessionLayer /> },
     { title: "Transport Layer", content: <ThreeWayHandshake /> },
     {
