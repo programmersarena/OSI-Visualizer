@@ -4,6 +4,11 @@ import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+interface Certificate {
+    validFrom: string;
+    validTo: string;
+}
+
 const TlsHandshake = ({ url }: { url: string }) => {
     const [handshakeSteps, setHandshakeSteps] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
@@ -11,7 +16,7 @@ const TlsHandshake = ({ url }: { url: string }) => {
     const [encryptedData, setEncryptedData] = useState("");
     const [tlsVersion, setTlsVersion] = useState("");
     const [cipherSuite, setCipherSuite] = useState("");
-    const [certificate, setCertificate] = useState<any>(null);
+    const [certificate, setCertificate] = useState<Certificate | null>(null);
 
     const fetchTlsHandshake = async () => {
         setLoading(true);
@@ -29,8 +34,8 @@ const TlsHandshake = ({ url }: { url: string }) => {
             setEncryptedData(response.data.encryptedData);
             setTlsVersion(response.data.tlsVersion);
             setCipherSuite(response.data.cipherSuite);
-            setCertificate(response.data.certificate);
-        } catch (err) {
+            setCertificate(response.data.certificate as Certificate);
+        } catch {
             setError("⚠️ Failed to fetch TLS Handshake. Please try again.");
         } finally {
             setLoading(false);
