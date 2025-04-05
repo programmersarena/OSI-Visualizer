@@ -21,6 +21,17 @@ jobs:
         run: |
           docker build -t osi-backend:latest -f ./osi-backend/Dockerfile.backend ./osi-backend
 
+      - name: Run Container
+        run: |
+          docker run -d -p 5000:5000 --name backend-container osi-backend:latest
+          sleep 10
+
+      - name: Health Check
+        run: curl --fail http://localhost:5000/livecheck || exit 1
+
+      - name: Stop and Remove Container
+        run: docker stop backend-container && docker rm backend-container
+
   build-frontend:
     name: Build and Test Frontend
     runs-on: ubuntu-latest
@@ -32,3 +43,14 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t osi-frontend:latest -f ./osi-frontend/Dockerfile.frontend ./osi-frontend
+
+      - name: Run Container
+        run: |
+          docker run -d -p 3000:3000 --name frontend-container osi-frontend:latest
+          sleep 10
+
+      - name: Health Check
+        run: curl --fail http://localhost:3000 || exit 1
+
+      - name: Stop and Remove Container
+        run: docker stop frontend-container && docker rm frontend-container
