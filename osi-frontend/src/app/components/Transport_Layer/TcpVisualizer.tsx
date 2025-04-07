@@ -11,23 +11,11 @@ interface Props {
 
 export default function TcpVisualizer({ url }: Props) {
   const [step, setStep] = useState(0); // Step controller
-  const [showFin, setShowFin] = useState(false);
-  const [finAck, setFinAck] = useState(false);
   const [showHandshake, setShowHandshake] = useState(false);
   const [showDataTransfer, setShowDataTransfer] = useState(false);
   const [showTermination, setShowTermination] = useState(false);
 
-  const getDomainName = (url: string) => {
-    try {
-      const { hostname } = new URL(url.startsWith("http") ? url : "http://" + url);
-      return hostname.replace(/^www\./, "");
-    } catch {
-      return url;
-    }
-  };
 
-  const domain = getDomainName(url);
-  const serverPort = url.startsWith("https") ? 443 : 80;
 
   // Simulate TCP segment sequence
   useEffect(() => {
@@ -58,14 +46,7 @@ export default function TcpVisualizer({ url }: Props) {
     }
   }, [step, showDataTransfer]);
 
-  // Connection termination
-  useEffect(() => {
-    const endTimer = setTimeout(() => {
-      setShowFin(true);
-      setTimeout(() => setFinAck(true), 2000);
-    }, 10000);
-    return () => clearTimeout(endTimer);
-  }, []);
+
 
   return (
     <div className="space-y-6 overflow-x-hidden">

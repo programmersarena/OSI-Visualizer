@@ -20,16 +20,8 @@ export default function ThreeWayHandshake({ url }: Props): JSX.Element {
 
   const domain = getDomainName(url);
 
-  const getServerPort = (url: string) => {
-    try {
-      const parsed = new URL(url.startsWith("http") ? url : "http://" + url);
-      return parsed.protocol === "https:" ? 443 : 80;
-    } catch {
-      return 443; // default fallback
-    }
-  };
-  const clientPort = Math.floor(Math.random() * (65535 - 49152 + 1)) + 49152;
-  const serverPort = getServerPort(url);
+
+  
 
   useEffect(() => {
     const interval = setInterval(() => {

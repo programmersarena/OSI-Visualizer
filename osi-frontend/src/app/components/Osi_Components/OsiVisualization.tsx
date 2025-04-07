@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ThreeWayHandshake from "../Transport_Layer/ThreeWayHandshake";
 import OsiLayer from "./OsiLayer";
 import DataLink from "../Datalink_Layer/DataLink";
 import TlsHandshake from "../Presentation_Layer/TlsHandshake";

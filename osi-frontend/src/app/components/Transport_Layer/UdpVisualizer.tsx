@@ -17,7 +17,6 @@ export default function UdpVisualizer({ url }: Props): JSX.Element {
 
   const domain = getDomainName(url);
   const serverPort = url.startsWith("https") ? 443 : 80;
-  const clientPort = 50000 + Math.floor(Math.random() * 10000);
 
   return (
     <div className="space-y-6">
