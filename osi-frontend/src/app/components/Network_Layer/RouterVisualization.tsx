@@ -30,7 +30,7 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 mt-6 relative">
+    <div className="flex flex-col items-center gap-4 mt-6 "> 
       {/* Source Device */}
       <div className="flex flex-col items-center">
         <span className="text-3xl">💻</span>
@@ -47,7 +47,10 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
                 <div key={ip} className="flex flex-col items-center relative">
                   {/* Router Icon */}
                   <span className="text-3xl">📡</span>
-                  <p className="text-xs text-gray-200">{ip}</p>
+                  <p className="text-xs text-gray-200">
+  {ip === "." ? "❌ Timed out ❌" : ip}
+</p>
+
 
                   {/* Dotted line between routers */}
                   {index < row.length - 1 && (

@@ -44,10 +44,10 @@ const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, curre
       title: "Presentation Layer",
       content: (
         <div>
-          <div className="mb-3">
+          <div className="flex justify-center items-center">
             <button
               onClick={() => setUseRealTimeTLS(!useRealTimeTLS)}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md"
+              className="px-4 py-2  my-3 bg-blue-500 text-white  rounded-md cursor-pointer"
             >
               {useRealTimeTLS ? "Switch to Simulated TLS" : "Switch to Real-Time TLS"}
             </button>

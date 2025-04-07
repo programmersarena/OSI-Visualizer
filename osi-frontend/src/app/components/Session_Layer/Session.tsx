@@ -53,7 +53,7 @@ export default function SessionLayer() {
         <div className="p-4">
             <h2 className="text-xl font-bold mb-4">Session Layer - Active Sessions</h2>
             {buttonVisible && (
-                <button onClick={handleGetSessions} className="p-2 bg-blue-500 text-white rounded">
+                <button onClick={handleGetSessions} className="p-2 bg-blue-500 text-white rounded cursor-pointer">
                     Get All Active Sessions
                 </button>
             )}

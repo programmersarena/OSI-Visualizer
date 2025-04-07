@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, JSX } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Encoding from "./Encoding";
 
@@ -7,26 +7,40 @@ type TlsHandshakeProps = {
   url: string;
 };
 
-export default function TlsHandshake({url} : TlsHandshakeProps): JSX.Element {
+export default function TlsHandshake({ url }: TlsHandshakeProps) {
   const [step, setStep] = useState<number>(0);
   const [certStep, setCertStep] = useState<number>(0);
+  const [scrolling, setScrolling] = useState<boolean>(true);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Cycle through TLS steps
   useEffect(() => {
     const interval = setInterval(() => {
-      setStep((prev) => (prev < 6 ? prev + 1 : 0)); // Cycle through all steps
+      setStep((prev) => (prev < 6 ? prev + 1 : 0));
     }, 2000);
     return () => clearInterval(interval);
   }, []);
 
+  // Animate cert check step
   useEffect(() => {
     if (step === 2) {
       setCertStep(0);
       const certInterval = setInterval(() => {
         setCertStep((prev) => (prev < 2 ? prev + 1 : 2));
-      }, 800); // Change validation text every 800ms
+      }, 800);
       return () => clearInterval(certInterval);
     }
   }, [step]);
+
+  // Auto-scroll when step changes
+  useEffect(() => {
+    if (scrolling && stepRefs.current[step]) {
+      stepRefs.current[step]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [step, scrolling]);
 
   const steps = [
     { text: "Client Hello →", color: "bg-green-500", from: "-100%", to: "100%" },
@@ -44,17 +58,36 @@ export default function TlsHandshake({url} : TlsHandshakeProps): JSX.Element {
   ];
 
   return (
-    <div className="flex flex-col w-full p-6 items-center bg-gray-900 h-full">
-      <Encoding url={url}/>
+    <div className="flex flex-col w-full p-6 items-center bg-gray-900 h-screen overflow-y-auto">
+      <Encoding url={url} />
+
       <h1 className="text-2xl font-bold pb-3 text-blue-400">TLS Handshake</h1>
 
+      {/* Toggle Scroll Button */}
+      <button
+        onClick={() => setScrolling((prev) => !prev)}
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor pointer "
+      >
+        {scrolling ? "Stop Auto Scroll" : "Start Auto Scroll"}
+      </button>
+
+      {/* Steps */}
       <div className="flex flex-col items-center w-full max-w-3xl border border-gray-700 p-4 rounded-lg bg-gray-800 shadow-md gap-4">
         {steps.map((s, index) => (
-          <div key={index} className="flex flex-row justify-between items-center w-full p-3 border border-gray-600 rounded-lg bg-gray-700">
+          <div
+            key={index}
+            ref={(el) => {
+              stepRefs.current[index] = el;
+            }}
+            className="flex flex-row justify-between items-center w-full p-3 border border-gray-600 rounded-lg bg-gray-700"
+          >
+            {/* Browser side */}
             <div className="flex flex-col items-center">
               <div className="w-8 h-8 bg-blue-500 text-white flex items-center justify-center rounded-full">🌍</div>
               <p className="text-gray-300">Browser</p>
             </div>
+
+            {/* Animated message */}
             <div className="relative flex-1 flex justify-center">
               {step === index && (
                 <motion.div
@@ -66,7 +99,7 @@ export default function TlsHandshake({url} : TlsHandshakeProps): JSX.Element {
                   {index === 2 ? (
                     <div
                       className="flex items-center justify-center text-center"
-                      style={{ minWidth: "220px" }} // Uniform size only for step 2
+                      style={{ minWidth: "220px" }}
                     >
                       {s.text[certStep]}
                     </div>
@@ -76,6 +109,8 @@ export default function TlsHandshake({url} : TlsHandshakeProps): JSX.Element {
                 </motion.div>
               )}
             </div>
+
+            {/* Server side */}
             <div className="flex flex-col items-center">
               <div className="w-8 h-8 bg-red-500 text-white flex items-center justify-center rounded-full">🖥️</div>
               <p className="text-gray-300">Server</p>
