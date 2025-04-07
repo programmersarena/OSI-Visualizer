@@ -49,7 +49,7 @@ const EncodingChecker: React.FC<EncodingCheckerProps> = ({ url }) => {
         !error && (
           <motion.button
             onClick={fetchEncoding}
-            className="px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg transition hover:bg-blue-700"
+            className="px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg transition hover:bg-blue-700 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
