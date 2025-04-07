@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ThreeWayHandshake from "../Transport_Layer/ThreeWayHandshake";
 import OsiLayer from "./OsiLayer";
 import DataLink from "../Datalink_Layer/DataLink";
 import TlsHandshake from "../Presentation_Layer/TlsHandshake";
@@ -8,6 +7,7 @@ import SessionLayer from "../Session_Layer/Session";
 import NetworkBase from "../Network_Layer/NetworkBase";
 import PhysicalLayer from "../Physical_Layer/Physical";
 import TlsHandshakeRealTime from "../Presentation_Layer/TlsHandshakeRealTime";
+import TransportLayerVisualizer from "../Transport_Layer/TransportLayerVisualizer";
 
 interface NetworkLayerData {
   IP: string;
@@ -57,7 +57,7 @@ const OsiVisualization: React.FC<OsiVisualizationProps> = ({ osiData, url, curre
       ),
     },
     { title: "Session Layer", content: <SessionLayer /> },
-    { title: "Transport Layer", content: <ThreeWayHandshake /> },
+    { title: "Transport Layer", content: <TransportLayerVisualizer url={url}/> },
     {
       title: "Network Layer",
       content: <NetworkBase ip={osiData.Layer3_Network.IP} isp={isp} url={url} />,
