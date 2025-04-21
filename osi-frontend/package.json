@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.1",
+    "@headlessui/react": "^2.2.2",
     "axios": "^1.8.4",
     "chart.js": "^4.4.8",
     "cors": "^2.8.5",
