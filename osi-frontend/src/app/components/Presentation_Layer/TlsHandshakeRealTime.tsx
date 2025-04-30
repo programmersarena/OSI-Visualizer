@@ -28,7 +28,7 @@ const TlsHandshake = ({ url }: { url: string }) => {
         setCertificate(null);
 
         try {
-            const response = await axios.post("http://localhost:5000/api/tls-handshake/tls-handshake", { url });
+            const response = await axios.post("https://osi-visualizer-1.onrender.com/api/tls-handshake/tls-handshake", { url });
 
             setHandshakeSteps(response.data.handshakeSteps);
             setEncryptedData(response.data.encryptedData);
