@@ -7,11 +7,12 @@ import routes from './src/routes.js';
 const app = express();
 
 // ✅ CORS should be added before defining routes
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'https://osi-visualizer-f1yp.onrender.com', credentials: true }));
 app.use(express.json());
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: 'http://localhost:3000', credentials: true } });
+//frontend url
+const io = new Server(server, { cors: { origin: 'https://osi-visualizer-f1yp.onrender.com', credentials: true } });
 
 app.use('/api', routes);
 
