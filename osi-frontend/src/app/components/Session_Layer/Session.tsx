@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
-
-const socket = io("http://localhost:5000");
+const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000" ;
+const socket = io(url);
 
 interface SessionData {
     [key: string]: {
