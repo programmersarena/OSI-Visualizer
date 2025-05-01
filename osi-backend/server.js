@@ -6,13 +6,14 @@ import routes from './src/routes.js';
 
 const app = express();
 
-// ✅ CORS should be added before defining routes
-app.use(cors({ origin: 'https://osi-visualizer-f1yp.onrender.com', credentials: true }));
+const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http:localhost:3000';
+
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(express.json());
 
 const server = http.createServer(app);
-//frontend url
-const io = new Server(server, { cors: { origin: 'https://osi-visualizer-f1yp.onrender.com', credentials: true } });
+
+const io = new Server(server, { cors: { origin: FRONTEND_URL, credentials: true } });
 
 app.use('/api', routes);
 
@@ -45,7 +46,7 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
 
 
