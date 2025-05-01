@@ -17,16 +17,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Backend Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/osi-backend:latest -f ./osi-backend/Dockerfile.backend ./osi-backend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/osi-backend:${{ env.IMAGE_TAG }} -f ./osi-backend/Dockerfile.backend ./osi-backend
 
       - name: Run Backend Container
         run: |
-          docker run -d -p 5000:5000 --name backend-container ${{ secrets.DOCKER_USERNAME }}/osi-backend:latest
+          docker run -d -p 5000:5000 --name backend-container ${{ secrets.DOCKER_USERNAME }}/osi-backend:${{ env.IMAGE_TAG }}
           sleep 10
 
       - name: Health Check Backend
@@ -36,7 +39,7 @@ jobs:
         run: docker stop backend-container && docker rm backend-container
 
       - name: Push Backend Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/osi-backend:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/osi-backend:${{ env.IMAGE_TAG }}
 
   build-frontend:
     name: Build, Test, and Push Frontend
@@ -47,16 +50,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Frontend Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/osi-frontend:latest -f ./osi-frontend/Dockerfile.frontend ./osi-frontend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/osi-frontend:${{ env.IMAGE_TAG }} -f ./osi-frontend/Dockerfile.frontend ./osi-frontend
 
       - name: Run Frontend Container
         run: |
-          docker run -d -p 3000:3000 --name frontend-container ${{ secrets.DOCKER_USERNAME }}/osi-frontend:latest
+          docker run -d -p 3000:3000 --name frontend-container ${{ secrets.DOCKER_USERNAME }}/osi-frontend:${{ env.IMAGE_TAG }}
           sleep 10
 
       - name: Health Check Frontend
@@ -66,4 +72,4 @@ jobs:
         run: docker stop frontend-container && docker rm frontend-container
 
       - name: Push Frontend Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/osi-frontend:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/osi-frontend:${{ env.IMAGE_TAG }}
