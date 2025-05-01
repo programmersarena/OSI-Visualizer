@@ -8,7 +8,7 @@ const app = express();
 
 const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
 
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(express.json());
 
 const server = http.createServer(app);
