@@ -6,7 +6,7 @@ import routes from './src/routes.js';
 
 const app = express();
 
-const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+const FRONTEND_URL = process.env.NEXT_SOCKET_FRONTEND_URL  || 'http://localhost:3000';
 
 app.use(cors({ origin: "*", credentials: true }));
 app.use(express.json());
