@@ -30,6 +30,23 @@ export default function App() {
 
   const handleSubmit = async () => {
     if (!url) return alert("Enter a valid URL");
+    
+    let normalizedUrl = url.trim();
+    // Automatically add https:// if missing
+    if (!/^https?:\/\//i.test(normalizedUrl)) {
+      normalizedUrl = "https://" + normalizedUrl;
+    }
+
+    try {
+      const parsed = new URL(normalizedUrl);
+      normalizedUrl = `${parsed.protocol}//${parsed.hostname}`;
+    } catch (e) {
+      alert("Invalid URL");
+      console.log(e);
+      return;
+    }
+    
+    setUrl(normalizedUrl);
     setLoading(true);
     setError("");
     setOsiData(null);

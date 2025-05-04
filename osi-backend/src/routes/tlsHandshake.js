@@ -19,6 +19,7 @@ router.post("/tls-handshake", async (req, res) => {
     if (!/^https?:\/\//i.test(url)) {
         url = `https://${url}`;
     }
+    url = url.replace(/^https?:\/\/(www\.)/, "https://");
     let handshakeSteps = [];
 
     try {

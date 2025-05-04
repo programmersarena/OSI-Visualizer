@@ -48,7 +48,7 @@ export async function getTracerouteHops(domain) {
     const seed = hashStringToSeed(domain);
     const random = seededRandom(seed);
 
-    const hopCount = Math.floor(random() * (20 - 7 + 1)) + 7;
+    const hopCount = Math.floor(random() * (14 - 7 + 1)) + 7;
 
     // Deterministic shuffle using the seeded RNG
     const shuffled = [...hardcodedHops];
