@@ -14,9 +14,11 @@ const encryptData = (data) => {
 };
 
 router.post("/tls-handshake", async (req, res) => {
-    const { url } = req.body;
+    let { url } = req.body;
     if (!url) return res.status(400).json({ error: "URL is required!" });
-
+    if (!/^https?:\/\//i.test(url)) {
+        url = `https://${url}`;
+    }
     let handshakeSteps = [];
 
     try {

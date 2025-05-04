@@ -71,7 +71,11 @@ export default function App() {
         if (step === 7) clearInterval(osiInterval);
       }, 800);
     } catch (err) {
-      setError("Error fetching data. Please check the URL.");
+      if (axios.isAxiosError(err) && err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("Unexpected error occurred.");
+      }
       console.error(err);
     } finally {
       setLoading(false);

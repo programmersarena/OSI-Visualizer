@@ -8,13 +8,21 @@ router.post("/analyze", async (req, res) => {
     if (!url) return res.status(400).json({ error: "URL is required" });
 
     try {
-        const hostname = new URL(url).hostname;
-        const ipAddress = await getIPAddress(hostname);
+        // Ensure the URL is properly formatted
+        let formattedUrl = url;
+        if (!formattedUrl.startsWith('http://') && !formattedUrl.startsWith('https://')) {
+            formattedUrl = 'https://' + formattedUrl; // Add https:// if missing
+        }
+
+        const hostname = new URL(formattedUrl).hostname; // Get hostname (e.g., google.com)
+        const ipAddress = await getIPAddress(hostname); // Assuming getIPAddress is your custom function to resolve IP
         res.json(ipAddress);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error resolving DNS:", error);
+        res.status(400).json({ error: "Invalid domain. DNS resolution failed." });
     }
 });
+
 
 router.post("/dns-lookup", async (req, res) => {
     const { domain } = req.body;
