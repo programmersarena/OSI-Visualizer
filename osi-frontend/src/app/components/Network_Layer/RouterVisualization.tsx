@@ -12,14 +12,14 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
   useEffect(() => {
     let hop = 0;
     const interval = setInterval(() => {
+      setCurrentHop(hop);
+      hop++;
+  
       if (hop > routers.length) {
-        hop = -1; // Restart after reaching the destination
-      } else {
-        setCurrentHop(hop);
-        hop++;
+        hop = 0; // Restart after reaching destination
       }
     }, 1000);
-
+  
     return () => clearInterval(interval);
   }, [routers.length]);
 
@@ -42,7 +42,7 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex items-center gap-6 relative">
             {row.map((ip, index) => {
-              const hopIndex = rowIndex * 5 + index; // Absolute hop index
+              const hopIndex = rowIndex * 4 + index; // Absolute hop index
               return (
                 <div key={ip} className="flex flex-col items-center relative">
                   {/* Router Icon */}
@@ -76,22 +76,24 @@ const RouterVisualization: React.FC<RouterVisualizationProps> = ({ routers }) =>
       </div>
 
       {/* Destination */}
-      <div className="flex flex-col items-center mt-6">
-        <span className="text-3xl">🌍</span>
-        <p className="text-xs text-gray-200 font-medium">Destination</p>
-      </div>
+      <div className="flex flex-col items-center mt-6 relative">
+  {/* Final Packet Arrival Animation */}
+  {currentHop === routers.length && (
+    <motion.div
+      className="absolute -top-6 text-2xl"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      📦
+    </motion.div>
+  )}
+  <span className="text-3xl">🌍</span>
+  <p className="text-xs text-gray-200 font-medium">Destination</p>
+</div>
 
       {/* Final Packet Arrival Animation */}
-      {currentHop >= routers.length && (
-        <motion.div
-          className="absolute bottom-16 text-2xl"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          📦
-        </motion.div>
-      )}
+      
     </div>
   );
 };

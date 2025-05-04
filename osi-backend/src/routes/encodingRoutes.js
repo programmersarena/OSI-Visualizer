@@ -5,9 +5,11 @@ const router = express.Router();
 
 // Encoding Detection Route
 router.post("/check-encoding", async (req, res) => {
-    const { url } = req.body;
+    let { url } = req.body;
     if (!url) return res.status(400).json({ error: "URL is required" });
-
+    if (!/^https?:\/\//i.test(url)) {
+        url = `https://${url}`;
+    }
     try {
         const encoding = await getEncodingDetails(url);
         res.json({ encoding });

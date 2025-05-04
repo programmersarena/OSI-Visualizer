@@ -5,9 +5,11 @@ const router = express.Router();
 
 // Get HTTP Request Headers
 router.post("/get-http-request", async (req, res) => {
-    const { domain } = req.body;
+    let { domain } = req.body;
     if (!domain) return res.status(400).json({ error: "URL is required" });
-
+    if (!/^https?:\/\//i.test(domain)) {
+        domain = `https://${domain}`;
+    }
     try {
         const requestLines = await getHttpRequestHeaders(domain);
         res.json({ requestLines });

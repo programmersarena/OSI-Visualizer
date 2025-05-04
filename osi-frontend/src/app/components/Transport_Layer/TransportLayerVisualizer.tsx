@@ -19,7 +19,7 @@ export default function TransportLayer({ url }: Props) {
       <div className="flex justify-center mb-6">
         <button
           onClick={() => setMode("TCP")}
-          className={`px-4 py-2 rounded-l-lg ${
+          className={`px-4 py-2 rounded-l-lg cursor-pointer ${
             mode === "TCP" ? "bg-blue-500" : "bg-gray-700"
           }`}
         >
@@ -27,7 +27,7 @@ export default function TransportLayer({ url }: Props) {
         </button>
         <button
           onClick={() => setMode("UDP")}
-          className={`px-4 py-2 rounded-r-lg ${
+          className={`px-4 py-2 rounded-r-lg cursor-pointer ${
             mode === "UDP" ? "bg-yellow-500 text-black" : "bg-gray-700"
           }`}
         >
