@@ -3,7 +3,8 @@ name: OSI Visualizer CI/CD
 on:
   push:
     branches:
-      - "**"
+      - "automate-cicd"
+      - "main"
   pull_request:
     branches:
       - "**"
@@ -88,7 +89,7 @@ jobs:
       #     auth-type: SERVICE_PRINCIPAL  
       - name: Authenticate with Azure
         run: |
-          az login --service-principal -username ${{ secrets.ARM_CLIENT_ID }} --password ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
+          az login --service-principal --username ${{ secrets.ARM_CLIENT_ID }} --password ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
 
       - name: Deploy Backend cnt app
         env:
