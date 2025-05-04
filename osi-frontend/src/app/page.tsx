@@ -42,6 +42,7 @@ export default function App() {
       normalizedUrl = `${parsed.protocol}//${parsed.hostname}`;
     } catch (e) {
       alert("Invalid URL");
+      console.log(e);
       return;
     }
     
